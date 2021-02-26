@@ -38,17 +38,24 @@ const Login = () => {
   const submitForm = evt => {
     evt.preventDefault()
 
-    const userInfo = {
+    const userLogin = {
       username: formValues.username.trim(),
       password: formValues.password.trim()
     }
 
     // Validation for empty field submission
-    if (!userInfo.username || !userInfo.password) return log('fields are empty')
+    if (!userLogin.username || !userLogin.password) return log('fields are empty')
 
-    // axios call
-    // request token from server
-    return log(userInfo)
+    axios
+      .post('http://localhost:5000/api/login', userLogin) // send user login data to server
+
+      .then(res => {
+        // receive token and save to localStorage as token
+        localStorage.setItem('token', res.data.payload)
+      })
+      .catch(err => {
+        log(err)
+      })
 
   }
 
@@ -87,8 +94,8 @@ const Login = () => {
 export default Login;
 
 //Task List:
-//1. Build a form containing a username and password field.
-//2. Add whatever state nessiary for form functioning.
-//3. MAKE SURE THAT FORM INPUTS INCLUDE THE LABEL TEXT "username" and "password" RESPECTIVELY.
-//4. If either the username or password is not displaied display EXACTLY the following words: Username or Password not valid.
+//1. Build a form containing a username and password field. ✅
+//2. Add whatever state necessary for form functioning. ✅
+//3. MAKE SURE THAT FORM INPUTS INCLUDE THE LABEL TEXT "username" and "password", RESPECTIVELY. ✅
+//4. If either the username or password is not displayed EXACTLY the following words: Username or Password, it's not valid. ✅
 //5. If the username / password is equal to Lambda School / i<3Lambd4, save that token to localStorage.
