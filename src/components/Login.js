@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useHistory } from "react";
 import axios from "axios";
 
 const log = console.log
@@ -8,7 +8,7 @@ const initialFormValues = {
   password: ''
 }
 
-const Login = () => {
+const Login = (props) => {
   const [formValues, setFormValues] = useState(initialFormValues)
 
   // make a post request to retrieve a token from the api
@@ -26,7 +26,7 @@ const Login = () => {
     - JSX to render form elements ✅
     - onChange handler to update form state ✅
     - prevent default behavior ✅
-    - onSubmit handler for form
+    - onSubmit handler for form ✅
   */}
 
   const updateForm = evt => {
@@ -52,9 +52,12 @@ const Login = () => {
       .then(res => {
         // receive token and save to localStorage as token
         localStorage.setItem('token', res.data.payload)
+
+        // Redirect user
+        props.history.push('/bubbles')
       })
       .catch(err => {
-        log(err)
+        log(err.response.data.error)
       })
 
   }
@@ -98,4 +101,4 @@ export default Login;
 //2. Add whatever state necessary for form functioning. ✅
 //3. MAKE SURE THAT FORM INPUTS INCLUDE THE LABEL TEXT "username" and "password", RESPECTIVELY. ✅
 //4. If either the username or password is not displayed EXACTLY the following words: Username or Password, it's not valid. ✅
-//5. If the username / password is equal to Lambda School / i<3Lambd4, save that token to localStorage.
+//5. If the username / password is equal to Lambda School / i<3Lambd4, save that token to localStorage. ✅
