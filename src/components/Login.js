@@ -1,14 +1,56 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+const log = console.log
+
+const initialFormValues = {
+  username: '',
+  password: ''
+}
+
 const Login = () => {
+  const [formValues, setFormValues] = useState(initialFormValues)
+
   // make a post request to retrieve a token from the api
   // when you have handled the token, navigate to the BubblePage route
 
-  useEffect(()=>{
+  useEffect(() => {
     // make a post request to retrieve a token from the api
     // when you have handled the token, navigate to the BubblePage route
   });
+
+
+  {/* 
+    CHECKLIST:
+    - form state ✅
+    - JSX to render form elements ✅
+    - onChange handler to update form state ✅
+    - prevent default behavior ✅
+    - onSubmit handler for form
+  */}
+
+  const updateForm = evt => {
+    const { name, value } = evt.target
+
+    setFormValues({ ...formValues, [name]: value })
+  }
+
+  const submitForm = evt => {
+    evt.preventDefault()
+
+    const userInfo = {
+      username: formValues.username.trim(),
+      password: formValues.password.trim()
+    }
+
+    // Validation for empty field submission
+    if (!userInfo.username || !userInfo.password) return log('fields are empty')
+
+    // axios call
+    // request token from server
+    return log(userInfo)
+
+  }
 
   return (
     <>
@@ -16,6 +58,28 @@ const Login = () => {
         Welcome to the Bubble App!
         <p>Build a login page here</p>
       </h1>
+
+      <form onSubmit={submitForm}>
+        <label>Username
+          <input
+            name='username'
+            type='text'
+            onChange={updateForm}
+            value={formValues.username}
+          />
+        </label>
+
+        <label>Password
+          <input
+            name='password'
+            type='password'
+            onChange={updateForm}
+            value={formValues.password}
+          />
+        </label>
+
+        <button>Submit</button>
+      </form>
     </>
   );
 };
