@@ -23,7 +23,6 @@ const BubblePage = () => {
 
   return (
     <>
-      <h1>Bubbles!!</h1>
       <ColorList colors={colorList} updateColors={setColorList} />
       <Bubbles colors={colorList} />
     </>
