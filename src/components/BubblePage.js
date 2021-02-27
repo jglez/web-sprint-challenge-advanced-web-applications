@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axiosWithAuth from '../helpers/axiosWithAuth'
 
 import Bubbles from "./Bubbles";
 import ColorList from "./ColorList";
@@ -10,15 +10,8 @@ const BubblePage = () => {
   const [colorList, setColorList] = useState([]);
 
   useEffect(() => {
-    const token = localStorage.getItem('token')
-
-    axios
-      // needs authorization header
-      .get('http://localhost:5000/api/colors', {
-        headers: {
-          authorization: token
-        }
-      })
+    axiosWithAuth()
+      .get('/api/colors')
       .then(res => {
         setColorList(res.data)
       })

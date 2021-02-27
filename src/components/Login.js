@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useHistory } from "react";
-import axios from "axios";
+import axiosWithAuth from '../helpers/axiosWithAuth'
 
 const log = console.log
 
@@ -46,8 +46,8 @@ const Login = (props) => {
     // Validation for empty field submission
     if (!userLogin.username || !userLogin.password) return log('fields are empty')
 
-    axios
-      .post('http://localhost:5000/api/login', userLogin) // send user login data to server
+    axiosWithAuth()
+      .post('/api/login', userLogin) // send user login data to server
 
       .then(res => {
         // receive token and save to localStorage as token
